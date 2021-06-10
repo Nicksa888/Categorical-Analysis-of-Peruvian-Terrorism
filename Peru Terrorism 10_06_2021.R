@@ -1045,7 +1045,7 @@ contingencyTableBF(LA_SP, sampleType = "poisson", posterior = F)
 ##################
 
 # The Bayes Factor Score of 2.899436e+49 supports the hypothesis that there is association between the variables.
-# The ±0% means that R has calculated an exact Bayes Factor score, so uncertainty about the Bayes Factor score is 0%
+# The Â±0% means that R has calculated an exact Bayes Factor score, so uncertainty about the Bayes Factor score is 0%
 
 # A score of 2.899436e+49 is within the score category of at least 100 for Extreme evidence in favour of association
 
@@ -1102,7 +1102,7 @@ LPSPBTLCT <- xtabs(~ Business + ShiningPath + Lethal, PeruFM)
 LPSPBTLCT_LL_Model <- loglm(~ Business * ShiningPath * Lethal, LPSPBTLCT)
 summary(LPSPBTLCT_LL_Model)
 
-# The above model captures all the effects of the variable interactions. Therefore, it is a perfect fit for the data as evident with the  likelihood ratio of zero and p-value of one.
+# The above model captures all the effects of the variable interactions. Therefore, it is a perfect fit for the data as evident with the likelihood ratio of zero and p-value of one.
 
 threeWay <- update(LPSPBTLCT_LL_Model, .~. - Business:ShiningPath:Lethal)
 summary(threeWay)
@@ -1114,33 +1114,3 @@ anova(LPSPBTLCT_LL_Model, threeWay)
 # The p-value is 1, so it is not significant, so we can remove this threeway interaction without making the model worse.
 
 mosaicplot(LPSPBTLCT, shade = T)
-
-###############################
-# Bayesian Loglinear Analysis #
-###############################
-
-library(conting)
-oh_ex <- bcct(formula = y ~ alc * hyp * obe, data = AOH,
-              + n.sample = 1000, prior = "UIP")
-
-set.seed(123)
-test1 <- bcct(formula = Lethal ~ (Business + ShiningPath) ^ 2, data = PeruFM, n.sample = 100, prior = "UIP")
-summary(test1)
-sub_model(test1)
-# Bayesian Hypothesis Testing
-carsBEST <- BESTmcmc(PeruFM$Lethal, PeruFM$ShiningPath)
-carsBEST
-plot(carsBEST)
-
-
-t.test(PeruFM$Lethal, PeruFM$ShiningPath)
-
-# The t.test output merely tells us that the relationship between the variable means is significant, which means there is some relationship. However, it tells us nothing about the magnitude of this relationship. For that, we can explore effect size, and one way of measuring effect size is to use cohen.d test, part of the effsize library
-
-cohen.d(mtcars$mpg[mtcars$am==0], mtcars$mpg[mtcars$am==1])
-
-
-
-
-
-
