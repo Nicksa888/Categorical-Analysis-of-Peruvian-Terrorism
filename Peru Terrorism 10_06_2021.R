@@ -4,7 +4,8 @@
 ##########################
 ##########################
 
-# Frequentist and Bayesian chi square analysis will feature, as will odds ratios, likelihoods and relative risks and loglinear analysis. Categorical visualization techniques include mosaic plots
+# Frequentist and Bayesian chi square analysis will feature, as will odds ratios, likelihoods and relative risks and loglinear analysis. Categorical 
+visualization techniques include mosaic plots
 
 #########################
 #########################
@@ -89,7 +90,8 @@ Peru <- GTDDTS %>% dplyr::filter(country_txt == "Peru")
 # Rename Columns #
 ##################
 
-setnames(Peru, old = c("iyear", "imonth", "provstate", "city",    "attacktype1_txt", "gname", "targtype1_txt", "weaptype1_txt", "nkill", "nwound"), new = c("Year", "Month", "Province", "City", "Attack", "Group", "Target", "Weapon", "Dead", "Wounded"))
+setnames(Peru, old = c("iyear", "imonth", "provstate", "city",    "attacktype1_txt", "gname", "targtype1_txt", "weaptype1_txt", "nkill", "nwound"), 
+	 new = c("Year", "Month", "Province", "City", "Attack", "Group", "Target", "Weapon", "Dead", "Wounded"))
 
 Peru[] <- lapply(Peru, factor) # convert data to factors
 
@@ -117,8 +119,11 @@ Peru_Raw <- read.csv("Peru_Raw.csv")
 ####################
 
 # Automatically converts each variable category or level into separate variables #
-# For instance, the province variable has several provinces listed within it. The one hot encoding technique converts each province into a separate new variable on its own, rather than being grouped with all other provinces under the variable headed province.
-# The unique value in the function selects each unique value or level and converts it into a new variable on a binary basis, where 1 equals presence of the level in the new variable and zero equals its absence. For instance, if we take bomb attack as a new variable, then rows where bomb attack occurred will be coded 1, while attacks that featured another attack type will be coded zero in the bomb attack variable column.
+# For instance, the province variable has several provinces listed within it. The one hot encoding technique converts each province into a separate new 
+variable on its own, rather than being grouped with all other provinces under the variable headed province.
+# The unique value in the function selects each unique value or level and converts it into a new variable on a binary basis, where 1 equals presence of 
+the level in the new variable and zero equals its absence. For instance, if we take bomb attack as a new variable, then rows where bomb attack occurred 
+will be coded 1, while attacks that featured another attack type will be coded zero in the bomb attack variable column.
 
 ########
 # Year #
@@ -197,7 +202,8 @@ str(Peru_Raw)
 # create Lethal Variable #
 ##########################
 
-# at least one person dead per attack is coded as lethal, as indicated by the number one, otherwise it is coded as zero for non lethal where no people have died in any given single attack
+# at least one person dead per attack is coded as lethal, as indicated by the number one, otherwise it is coded as zero for non lethal where no people 
+have died in any given single attack
 
 Peru_Raw$Lethal <- ifelse(Peru_Raw$Dead > 0, 
                           c(1), c(0))
@@ -284,8 +290,10 @@ View(t)
 ######################
 ######################
 
-# For each variable, a Bayesfactor score is generated for each variables importance to the lethal variable. The purpose is to identify only the significant variables in terms of lethal, which can be selected in a final model. This final model is then subjected to categorical analysis.
-# For Bayes factor scores, a value between 30 - 100 means there is strong support for significant variables, while 100+ indicate extreme support for variables being significant.
+# For each variable, a Bayesfactor score is generated for each variables importance to the lethal variable. The purpose is to identify only the 
+significant variables in terms of lethal, which can be selected in a final model. This final model is then subjected to categorical analysis.
+# For Bayes factor scores, a value between 30 - 100 means there is strong support for significant variables, while 100+ indicate extreme support for 
+variables being significant.
 
 ###################
 # Decade Variable #
@@ -720,10 +728,14 @@ CBBF
 ######################################
 ######################################
 
-# The below model contains all the extremely significant features when using attack type and province. Weapon Type and city variables are included in a different model.
+# The below model contains all the extremely significant features when using attack type and province. Weapon Type and city variables are included in a
+different model.
 # With this temporary final collection, it is necessary to run the bayesfactor tests again to establish a final collection
 
-PeruFFS <- dplyr::select(Peru_FC, c("Lethal", "LimaProvince",	"Ayacucho", "Huancavelica", "Apurimac", "Huanuco", "Puno", "SanMartin", "GovernmentDiplomatic", "Business", "FoodWaterSupply", "Utilities", "JournalistsMedia",  "Private", "Transportation", "Police", "TerroristsNonStateMilitia", "ShiningPath", "TupacAmaruRevolutionaryMovement", "Bomb", "ArmedAssault", "Assassination", "InfrastructureAttack", "HostageBarricade"))
+PeruFFS <- dplyr::select(Peru_FC, c("Lethal", "LimaProvince",	"Ayacucho", "Huancavelica", "Apurimac", "Huanuco", "Puno", "SanMartin", 
+				    "GovernmentDiplomatic", "Business", "FoodWaterSupply", "Utilities", "JournalistsMedia",  "Private", "Transportation",
+				    "Police", "TerroristsNonStateMilitia", "ShiningPath", "TupacAmaruRevolutionaryMovement", "Bomb", "ArmedAssault", 
+				    "Assassination", "InfrastructureAttack", "HostageBarricade"))
 
 ##################################
 # Bayes Factor Feature Selection #
@@ -767,7 +779,10 @@ CBBF
 
 # The variable list below is the final selected variable collection which is ready for categorical data analysis
 
-PeruFM <- dplyr::select(Peru_FC, c("Lethal", "LimaProvince",	"Ayacucho", "Huancavelica", "Apurimac", "Huanuco", "Puno", "SanMartin", "GovernmentDiplomatic", "Business", "FoodWaterSupply", "Utilities", "JournalistsMedia",  "Private", "Transportation", "Police", "TerroristsNonStateMilitia", "ShiningPath", "TupacAmaruRevolutionaryMovement", "Bomb", "ArmedAssault", "Assassination", "InfrastructureAttack", "HostageBarricade"))
+PeruFM <- dplyr::select(Peru_FC, c("Lethal", "LimaProvince",	"Ayacucho", "Huancavelica", "Apurimac", "Huanuco", "Puno", "SanMartin", 
+				   "GovernmentDiplomatic", "Business", "FoodWaterSupply", "Utilities", "JournalistsMedia",  "Private", "Transportation", 
+				   "Police", "TerroristsNonStateMilitia", "ShiningPath", "TupacAmaruRevolutionaryMovement", "Bomb", "ArmedAssault",
+				   "Assassination", "InfrastructureAttack", "HostageBarricade"))
 
 ####################
 # Chi Square Tests #
@@ -801,28 +816,53 @@ CrossTable(LA_SP,
            format = "SPSS"
 )
 
-# In the above code in the CrossTable() function, lines two to four instruct R to calculate the proportion of each cell value to the column and row it is part of and the overall table total. The prop.chisq = True instruction generates a value indicative of the contribution each cell makes to the overall chi square score. The next four lines generate outputs for various chi-square test and the following three generate information on residuals. The final line instructs R to display the output table in the style of SPSS statistical software.
+# In the above code in the CrossTable() function, lines two to four instruct R to calculate the proportion of each cell value to the column and row it 
+			  is part of and the overall table total. The prop.chisq = True instruction generates a value indicative of the contribution 
+			  each cell makes to the overall chi square score. The next four lines generate outputs for various chi-square test and the 
+			  following three generate information on residuals. The final line instructs R to display the output table in the style of SPSS 
+			  statistical software.
 
 #########################################
 # Report of the above contingency table #
 #########################################
 
-# All expected counts are much higher than five and the data is independent. Therefore, both assumptions have been met, which means we can be confident in the output. 
+# All expected counts are much higher than five and the data is independent. Therefore, both assumptions have been met, which means we can be confident 
+in the output. 
 
-# The expected cell values are what would be expected given that the two variables are independent. In other words, the expected cell totals indicate the values that would occur by chance alone.
+# The expected cell values are what would be expected given that the two variables are independent. In other words, the expected cell totals indicate 
+the values that would occur by chance alone.
 
-# The p-value is very small at 1.124202e-47, indicative that lethality (or not) has has a significant effect on lethal attack by Shining Path. The significant p-value also indicates that it is very unlikely that the chi squared statistic of 210.3989 would be so large purely by chance if there was no association between the variables.
+# The p-value is very small at 1.124202e-47, indicative that lethality (or not) has has a significant effect on lethal attack by Shining Path. The 
+significant p-value also indicates that it is very unlikely that the chi squared statistic of 210.3989 would be so large purely by chance if there was 
+no association between the variables.
 
-#The chi-square statistic is computed by taking the sum of the observed frequency  minus the expected frequency squared divided by the expected frequency in each of the four cells
+#The chi-square statistic is computed by taking the sum of the observed frequency  minus the expected frequency squared divided by the expected 
+frequency in each of the four cells
 
-# The computed chi-square value is compared to a tabled chi-square value for a given degree of freedom. The degrees of freedom are always determined by the number of rows minus one (r ??? 1) times the number of columns minus one (c ??? 1). This can be expressed as: df = (r ??? 1)(c ??? 1). Since there are two rows and two columns, the degree of freedom is: df = (2 ??? 1)(2 ??? 1) = 1. The tabled chi-square value for df = 1 and a .05 level of significance is 3.84. Since the computed chi-square value of 210.3989 is greater than the tabled chi-square value of 3.84, we reject the null hypothesis in favor of the alternative hypothesis that lethal or non lethal attack differs in the percent where Shining Path is responsible for an attack. The chi-square statistic will be small if there are small differences between the observed and the expected values, and it will be large if there large differences. The size of the difference indicates how closely the actual observed data values match what would be expected ig the null hypothesis were true. The large chi square statistic indicates it is not a good fit to the data for the null hypothesis to be true.  Since each cell value is greater than 3.84, (32.059, 104.742, 17.2476.67, and 56.351), we would conclude that each cross-tabulated cell significantly contributed to the overall chi-square. Since each value is above the 3.84, type I and type II errors are not applicable as it the chi square output is beyond a chance level of probability
+# The computed chi-square value is compared to a tabled chi-square value for a given degree of freedom. The degrees of freedom are always determined by 
+the number of rows minus one (r ??? 1) times the number of columns minus one (c ??? 1). This can be expressed as: df = (r ??? 1)(c ??? 1). Since there 
+are two rows and two columns, the degree of freedom is: df = (2 ??? 1)(2 ??? 1) = 1. The tabled chi-square value for df = 1 and a .05 level of 
+significance is 3.84. Since the computed chi-square value of 210.3989 is greater than the tabled chi-square value of 3.84, we reject the null hypothesis
+in favor of the alternative hypothesis that lethal or non lethal attack differs in the percent where Shining Path is responsible for an attack. 
+The chi-square statistic will be small if there are small differences between the observed and the expected values, and it will be large if there 
+large differences. The size of the difference indicates how closely the actual observed data values match what would be expected ig the null 
+hypothesis were true. The large chi square statistic indicates it is not a good fit to the data for the null hypothesis to be true.  
+Since each cell value is greater than 3.84, (32.059, 104.742, 17.2476.67, and 56.351), we would conclude that each cross-tabulated cell significantly 
+contributed to the overall chi-square. Since each value is above the 3.84, type I and type II errors are not applicable as it the chi square output is 
+beyond a chance level of probability
 
 qchisq(p = .95, df = 1) # determines the correct chi square value
-pchisq(q = 210.3989, df = 1, lower.tail = FALSE) # calculate the actual p-value. # The lower tail instructs R to indicate the probabiity of getting a score of 210.3989 or higher score by chance
+pchisq(q = 210.3989, df = 1, lower.tail = FALSE) # calculate the actual p-value. # The lower tail instructs R to indicate the probabiity of getting a 
+			  score of 210.3989 or higher score by chance
  
-# The last number in each cell refers to the standarized residual. The standardised residual values indicate the impact on chi square. It is possible to determine the significance of each. If the value lies outside of plus or minus 1.96, then it is significant at p <.05, if it lies outside of plus or minus 2.58, then it is significant at p <.01, and if it lies outside of plus or minus 3.29, then it is significant at p <.001. 
+# The last number in each cell refers to the standarized residual. The standardised residual values indicate the impact on chi square. It is possible to 
+determine the significance of each. If the value lies outside of plus or minus 1.96, then it is significant at p <.05, if it lies outside of plus or
+minus 2.58, then it is significant at p <.01, and if it lies outside of plus or minus 3.29, then it is significant at p <.001. 
 
-# All such residuals are more than plus or minus 3.29, so each figure is significant at p <.001. Shining Path were unlikely to carry out non lethal attacks and collective other groups were unlikely to carry out lethal attacks. This is evident with the minus sign before these two figures.The residual values are smaller for non fatal attack than for lethal attack, which therefore means that the association between lethal attack and Shining Path Group is driven mainly by lethal attack rather than non fatal attack
+# All such residuals are more than plus or minus 3.29, so each figure is significant at p <.001. Shining Path were unlikely to carry out non lethal 
+attacks and collective other groups were unlikely to carry out lethal attacks. This is evident with the minus sign before these two figures.The residual 
+values are smaller for non fatal attack than for lethal attack, which therefore means that the association between lethal attack and Shining Path Group is 
+driven mainly by lethal attack rather than non fatal attack
 
 ################
 ################
@@ -830,7 +870,8 @@ pchisq(q = 210.3989, df = 1, lower.tail = FALSE) # calculate the actual p-value.
 ################
 ################
 
-# Association has been indicated between the variables. However, this doesn't indicate how strong the association. To determine this, effect size calculations must be completed. Cramers V is a frequent test
+# Association has been indicated between the variables. However, this doesn't indicate how strong the association. To determine this, effect size 
+calculations must be completed. Cramers V is a frequent test
 
 ###########
 # Cramers V
@@ -855,7 +896,10 @@ cramersV(LA_SP)
 # Odds Ratios #
 ###############
 
-# Another means of determining effect size when both variables are binary are odds ratios. Odds ratios measure the odds of some event happening given a particular exposure compared to the odds of it occuring when the exposure is absent. In this context, the exposure is terrorist group responsbility of attack (Shining Path or other group) and the event is fatality of attack (lethal or non fatal attack). The odds ratio would measure the odds of lethal attack by Shining Path, compared to the odds of non fatal attack by Shining Path.
+# Another means of determining effect size when both variables are binary are odds ratios. Odds ratios measure the odds of some event happening given a 
+particular exposure compared to the odds of it occuring when the exposure is absent. In this context, the exposure is terrorist group responsbility of
+attack (Shining Path or other group) and the event is fatality of attack (lethal or non fatal attack). The odds ratio would
+measure the odds of lethal attack by Shining Path, compared to the odds of non fatal attack by Shining Path.
 
 ##########################
 # Likelihood and estimates
@@ -954,10 +998,11 @@ mosaicplot(LA_SP,
 
 # The width of each column indicates the volume in that column compared to the other column
 # The volume of each cell in a particular column indicates th volume in that cell compared to the other cell in that particular column
-# Each cell is coloured on a sliding scale from dark blue to dark red. Dark blue indicates the count in that cell is much more than expected if there was no association between that pair of variables, while dark red indicates that the count is much less.
-# As evident, lethal attacks by Shining Path are much more than expected given independence, while non fatal attacks by Shining Path are much less than expected
-# 
-
+# Each cell is coloured on a sliding scale from dark blue to dark red. Dark blue indicates the count in that cell is much more than expected if there was
+no association between that pair of variables, while dark red indicates that the count is much less.
+# As evident, lethal attacks by Shining Path are much more than expected given independence, while non fatal attacks by Shining Path are much less than 
+expected
+			  
 ##################################
 ##################################
 # Contingency Coefficient Values #
@@ -966,10 +1011,12 @@ mosaicplot(LA_SP,
 
 # This is another means to calculate effect size
 # Understanding Contingency Coefficient Values
-# The contingency coefficient helps us decide if variable b is 'contingent' on variable a. However, it is a rough measure and doesn't quantify the dependence exactly; It can be used as a rough guide:
+# The contingency coefficient helps us decide if variable b is 'contingent' on variable a. However, it is a rough measure and doesn't quantify the 
+dependence exactly; It can be used as a rough guide:
 # If C is near zero (or equal to zero) you can conclude that your variables are independent of each other; there is no association between them.
 # If C is away from zero there is some relationship; C can only take on positive values.
-# The larger the table your chi-squared coefficient is calculated from, the closer to 1 a perfect association will approach. That's why some statisticians suggest using the contingency coefficient only if you're working with a 5 by 5 table or larger.
+# The larger the table your chi-squared coefficient is calculated from, the closer to 1 a perfect association will approach. That's why some statisticians
+suggest using the contingency coefficient only if you're working with a 5 by 5 table or larger.
 
 Contingency <- function(x) {
   chi <- chisq.test(x)
@@ -1022,7 +1069,8 @@ round(3.43/23.43 * 100, 2) # = 37.78%
 # Bayesian Contingency Table Analysis #
 #######################################
 
-# https://stats.libretexts.org/Bookshelves/Applied_Statistics/Book%3A_Learning_Statistics_with_R_-_A_tutorial_for_Psychology_Students_and_other_Beginners_(Navarro)/17%3A_Bayesian_Statistics/17.06%3A_Bayesian_Analysis_of_Contingency_Tables
+# https://stats.libretexts.org/Bookshelves/Applied_Statistics/Book%3A_Learning_Statistics_with_R_-_A_tutorial_for_Psychology_Students_and_other_Beginners_
+(Navarro)/17%3A_Bayesian_Statistics/17.06%3A_Bayesian_Analysis_of_Contingency_Tables
 
 # http://www.alexander-ly.com/wp-content/uploads/2014/09/JamilEtAlGunelDickeyinpress.pdf 
 # The website directly above indicates the grading of Bayes Factor scores
@@ -1087,8 +1135,10 @@ hist(diffprop, main = "", xlab = "")
 abline(v = quantile(diffprop, c(0.025), col = "black")) # lower bound of 95% HDI
 abline(v = quantile(diffprop, c(0.975), col = "black")) # higher bound of 95% HDI
 round(mean(diffprop) * 100, 2)
-# This indicates how much the lethal:non fatal ratio decreases as we switch columns from Shining Path Group to collective other group. The average decrease is 52.82
-# The two vertical lines indicate where 95% of the data is found. Data points within this interval have a higher probability density than those outside the intervals. The hdi function below indicates the exact percentages of the HDI intervals.
+# This indicates how much the lethal:non fatal ratio decreases as we switch columns from Shining Path Group to collective other group. The average 
+decrease is 52.82
+# The two vertical lines indicate where 95% of the data is found. Data points within this interval have a higher probability density than those outside 
+the intervals. The hdi function below indicates the exact percentages of the HDI intervals.
 
 library(bayestestR)
 hdi(diffprop, ci = 0.95)
@@ -1102,7 +1152,8 @@ LPSPBTLCT <- xtabs(~ Business + ShiningPath + Lethal, PeruFM)
 LPSPBTLCT_LL_Model <- loglm(~ Business * ShiningPath * Lethal, LPSPBTLCT)
 summary(LPSPBTLCT_LL_Model)
 
-# The above model captures all the effects of the variable interactions. Therefore, it is a perfect fit for the data as evident with the likelihood ratio of zero and p-value of one.
+# The above model captures all the effects of the variable interactions. Therefore, it is a perfect fit for the data as evident with the likelihood ratio 
+of zero and p-value of one.
 
 threeWay <- update(LPSPBTLCT_LL_Model, .~. - Business:ShiningPath:Lethal)
 summary(threeWay)
